@@ -1,4 +1,6 @@
-package com.example.albertodoc.retrofitexample;
+package com.example.albertodoc.retrofitexample.Retrofit;
+
+import com.example.albertodoc.retrofitexample.Model.User;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

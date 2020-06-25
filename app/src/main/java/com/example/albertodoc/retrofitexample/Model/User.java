@@ -1,4 +1,4 @@
-package com.example.albertodoc.retrofitexample;
+package com.example.albertodoc.retrofitexample.Model;
 
 public class User {
 	private String name;

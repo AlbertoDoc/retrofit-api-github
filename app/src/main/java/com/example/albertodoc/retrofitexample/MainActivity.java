@@ -9,6 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
+import com.example.albertodoc.retrofitexample.Model.User;
+import com.example.albertodoc.retrofitexample.Retrofit.GitHubService;
+import com.example.albertodoc.retrofitexample.Retrofit.RetrofitConfig;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
