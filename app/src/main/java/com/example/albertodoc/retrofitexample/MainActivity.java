@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
 				GitHubService service = retrofit.getRetrofit().create(GitHubService.class);
 
-				Call<User> call = service.getUser(userInput);
+				//Call<User> call = service.getUsers(userInput);
 
-				call.enqueue(new Callback<User>() {
+				/*call.enqueue(new Callback<User>() {
 					@Override
 					public void onResponse(Call<User> call, Response<User> response) {
 						if(!response.isSuccessful()){
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 					public void onFailure(Call<User> call, Throwable t) {
 						campoCep.setText("Erro ao buscar usuário: " + t.getMessage());
 					}
-				});
+				});*/
 			}
 		});
 	}

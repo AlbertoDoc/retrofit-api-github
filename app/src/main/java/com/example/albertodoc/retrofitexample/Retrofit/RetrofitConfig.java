@@ -6,14 +6,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitConfig {
 
+	private static final String BASE_URL = "https://api.github.com/";
 	private final Retrofit retrofit;
+	private static RetrofitConfig instance;
 
 	public RetrofitConfig(){
 		this.retrofit = new Retrofit.Builder()
-				.baseUrl("https://jsonplaceholder.typicode.com/")
+				.baseUrl(BASE_URL)
 				.addCallAdapterFactory(RxJava3CallAdapterFactory.create())
 				.addConverterFactory(GsonConverterFactory.create())
 				.build();
+	}
+
+	public static RetrofitConfig getInstance() {
+		if(instance == null){
+			instance = new RetrofitConfig();
+		}
+		return instance;
 	}
 
 	public Retrofit getRetrofit() {
