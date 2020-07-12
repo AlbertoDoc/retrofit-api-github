@@ -2,13 +2,13 @@ package com.example.albertodoc.retrofitexample.Model;
 
 public class User {
 	private String name;
-	private String bio;
-	private String location;
+	private String username;
+	private String email;
 
-	public User(String name, String description, String location) {
+	public User(String name, String username, String email) {
 		this.name = name;
-		this.bio = description;
-		this.location = location;
+		this.username = username;
+		this.email = email;
 	}
 
 	public String getName() {
@@ -16,17 +16,17 @@ public class User {
 	}
 
 	public String getBio() {
-		return bio;
+		return username;
 	}
 
 	public String getLocation() {
-		return location;
+		return email;
 	}
 
 	@Override
 	public String toString(){
 		return "nome: " + this.name +
-				"\ndescrição: " + this.bio +
-				"\ncidade: " + this.location;
+				"\nusuário: " + this.username +
+				"\nemail: " + this.email;
 	}
 }

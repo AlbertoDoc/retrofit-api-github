@@ -1,5 +1,6 @@
 package com.example.albertodoc.retrofitexample.Retrofit;
 
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -10,6 +11,7 @@ public class RetrofitConfig {
 	public RetrofitConfig(){
 		this.retrofit = new Retrofit.Builder()
 				.baseUrl("https://jsonplaceholder.typicode.com/")
+				.addCallAdapterFactory(RxJava3CallAdapterFactory.create())
 				.addConverterFactory(GsonConverterFactory.create())
 				.build();
 	}
