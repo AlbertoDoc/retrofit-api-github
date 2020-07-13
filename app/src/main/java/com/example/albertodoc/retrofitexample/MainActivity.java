@@ -1,23 +1,21 @@
 package com.example.albertodoc.retrofitexample;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
-import com.example.albertodoc.retrofitexample.Model.User;
-import com.example.albertodoc.retrofitexample.Retrofit.GitHubService;
 import com.example.albertodoc.retrofitexample.Retrofit.RetrofitConfig;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
+
+	private Disposable disposable;
+	private TextView cepTxtView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,41 +24,28 @@ public class MainActivity extends AppCompatActivity {
 
 		Button btnBuscarCep = findViewById(R.id.buscarButton);
 		final EditText campoCep = findViewById(R.id.cepEditText);
-		final TextView cepTxtView = findViewById(R.id.cepTextView);
+		cepTxtView = findViewById(R.id.cepTextView);
 
 
-		btnBuscarCep.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// buscar o cep
+		btnBuscarCep.setOnClickListener(v -> {
+			String userInput = campoCep.getText().toString();
 
-				String userInput = campoCep.getText().toString();
-
-				RetrofitConfig retrofit = new RetrofitConfig();
-
-				GitHubService service = retrofit.getRetrofit().create(GitHubService.class);
-
-				//Call<User> call = service.getUsers(userInput);
-
-				/*call.enqueue(new Callback<User>() {
-					@Override
-					public void onResponse(Call<User> call, Response<User> response) {
-						if(!response.isSuccessful()){
-							cepTxtView.setText("usuário não encontrado, código de erro -> " + response.code());
-							return;
-						}
-
-						User user = new User(response.body().getName(), response.body().getBio(), response.body().getLocation());
-
-						cepTxtView.setText(user.toString());
-					}
-
-					@Override
-					public void onFailure(Call<User> call, Throwable t) {
-						campoCep.setText("Erro ao buscar usuário: " + t.getMessage());
-					}
-				});*/
+			if (!userInput.isEmpty()){
+				getGithubUser(userInput);
 			}
 		});
+	}
+
+	private void getGithubUser(String userName) {
+		disposable = RetrofitConfig.getInstance()
+				.getUser(userName)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(user -> {
+					String texto = user.toString();
+					cepTxtView.setText(texto);
+				}, throwable -> {
+					cepTxtView.setText("Usuário não encontrado");
+				});
 	}
 }
